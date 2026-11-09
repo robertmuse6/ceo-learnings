@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEO Learnings</title>
+<meta name="description" content="A growing library of what operators actually said, read three ways: by source, by person, by theme.">
+<style>
+    :root {
+        --ink: #251f21;
+        --ink2: #585254;
+        --hairline: #eae9ea;
+        --sand: #f4efec;
+        --teal: #4d8377;
+        --page: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: var(--sand);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 28px 16px 64px; }
+    header.site { padding: 20px 4px 18px; }
+    header.site h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 30px; letter-spacing: -0.02em; }
+    header.site p.sub { color: var(--ink2); margin-top: 8px; font-size: 15px; }
+    header.site p.counts { color: var(--teal); font-weight: 600; font-size: 13px; margin-top: 10px; }
+    nav.tabs {
+        display: flex; gap: 8px; position: sticky; top: 0; z-index: 5;
+        background: var(--sand); padding: 10px 4px; border-bottom: 1px solid var(--hairline);
+    }
+    nav.tabs button {
+        flex: 1; border: 1px solid var(--hairline); background: var(--page); color: var(--ink2);
+        font: inherit; font-size: 14px; font-weight: 600; padding: 10px 0; border-radius: 999px; cursor: pointer;
+    }
+    nav.tabs button[aria-selected="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
+    section.view { padding-top: 20px; }
+    .viewnote { color: var(--ink2); font-size: 14px; padding: 0 4px 14px; }
+    .card {
+        background: var(--page); border-radius: 16px; padding: 20px;
+        margin-bottom: 14px; box-shadow: 0 1px 2px rgba(37,31,33,0.05);
+    }
+    .eyebrow { color: var(--teal); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .card h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 21px; letter-spacing: -0.01em; margin: 6px 0 8px; }
+    .card h3 { font-size: 16px; margin: 0 0 6px; }
+    .meta { color: var(--ink2); font-size: 13.5px; margin-bottom: 10px; }
+    .card p { margin-bottom: 10px; }
+    .card p:last-child { margin-bottom: 0; }
+    a { color: var(--teal); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .srclink { display: inline-block; margin-top: 6px; font-size: 14.5px; }
+    .tnote { color: var(--ink2); font-size: 13px; border-top: 1px solid var(--hairline); padding-top: 10px; margin-top: 12px; }
+    .themechips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .chip { font-size: 12.5px; color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 3px 10px; font-weight: 600; }
+    details { border-top: 1px solid var(--hairline); padding: 10px 0; }
+    details:last-of-type { padding-bottom: 0; }
+    summary { cursor: pointer; font-weight: 600; font-size: 15px; list-style: none; padding: 4px 0; min-height: 30px; }
+    summary::before { content: "+"; color: var(--teal); font-weight: 700; margin-right: 10px; }
+    details[open] summary::before { content: "\2013"; }
+    .claimtext { padding: 8px 0 4px; }
+    blockquote {
+        border-left: 3px solid var(--teal); padding: 6px 0 6px 14px; margin: 10px 0 4px;
+        color: var(--ink2); font-style: italic; font-size: 15px;
+    }
+    .position { border-top: 1px solid var(--hairline); padding: 12px 0; }
+    .position:last-child { padding-bottom: 0; }
+    .position .who { font-weight: 700; font-size: 14.5px; }
+    .position .stance { margin-top: 4px; font-size: 15px; }
+    .contextbox { background: var(--sand); border-radius: 12px; padding: 12px 14px; font-size: 14px; color: var(--ink2); margin-top: 12px; }
+    footer.site { color: var(--ink2); font-size: 13px; padding: 24px 4px 0; border-top: 1px solid var(--hairline); margin-top: 28px; }
+    @media (min-width: 768px) { .wrap { padding-top: 48px; } header.site h1 { font-size: 38px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <header class="site">
+        <h1>CEO Learnings</h1>
+        <p class="sub">A growing library of what operators actually said, read three ways: the original sources, the people, and the themes across them. Summaries are original writing; quotes are the speaker's own words, attributed.</p>
+        <p class="counts" id="counts"></p>
+    </header>
+
+    <nav class="tabs" aria-label="Views">
+        <button id="tab-sources" aria-selected="true" onclick="show('sources')">Sources</button>
+        <button id="tab-people" aria-selected="false" onclick="show('people')">People</button>
+        <button id="tab-themes" aria-selected="false" onclick="show('themes')">Themes</button>
+    </nav>
+
+    <section class="view" id="view-sources"></section>
+    <section class="view" id="view-people" hidden></section>
+    <section class="view" id="view-themes" hidden></section>
+
+    <footer class="site">
+        <p>Each learning is stored once and connected to all three views, so the views cannot drift apart. Full transcripts stay private; personal reflections never appear here. Where two people disagree, both positions stay visible with names attached.</p>
+    </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const personById = Object.fromEntries(PEOPLE.map(p => [p.id, p]));
+const themeById = Object.fromEntries(THEMES.map(t => [t.id, t]));
+
+document.getElementById('counts').textContent =
+    `${SOURCES.length} source${SOURCES.length === 1 ? '' : 's'} · ${PEOPLE.length} ${PEOPLE.length === 1 ? 'person' : 'people'} · ${THEMES.length} themes · ${LEARNINGS.length} learnings`;
+
+function show(view) {
+    for (const v of ['sources', 'people', 'themes']) {
+        document.getElementById('view-' + v).hidden = v !== view;
+        document.getElementById('tab-' + v).setAttribute('aria-selected', v === view ? 'true' : 'false');
+    }
+    window.scrollTo(0, 0);
+}
+
+function quoteBlock(q) {
+    return q ? `<blockquote>&ldquo;${q}&rdquo;</blockquote>` : '';
+}
+
+function renderSources() {
+    const el = document.getElementById('view-sources');
+    let html = `<p class="viewnote">The unadulterated record: a direct link to each original, with the captured transcript kept privately. Nothing paraphrased, nothing smoothed over.</p>`;
+    for (const s of SOURCES) {
+        const p = personById[s.person];
+        const learnings = LEARNINGS.filter(l => l.source === s.id);
+        html += `<div class="card">
+            <div class="eyebrow">${p.name}</div>
+            <h2>${s.title}</h2>
+            <div class="meta">${s.show} · captured ${s.captured}</div>
+            <p>${s.abstract}</p>
+            <a class="srclink" href="${s.url}" target="_blank" rel="noopener">Watch or read the original &rarr;</a>
+            <div class="tnote">${s.transcriptNote}${s.transcriptUrl ? ` <a href="${s.transcriptUrl}" target="_blank" rel="noopener">Open the raw transcript (private, opens only for the owner)</a>` : ''}</div>
+            <div style="margin-top:14px">
+                <h3>What this source contributes (${learnings.length} learnings)</h3>
+                ${learnings.map((l, i) => `
+                    <details>
+                        <summary>${i + 1}. ${l.claim.split('. ')[0]}.</summary>
+                        <div class="claimtext">${l.claim}</div>
+                        ${quoteBlock(l.quote)}
+                        <div class="themechips">${l.themes.map(t => `<span class="chip">${themeById[t].name}</span>`).join('')}</div>
+                    </details>`).join('')}
+            </div>
+        </div>`;
+    }
+    el.innerHTML = html;
+}
+
+function renderPeople() {
+    const el = document.getElementById('view-people');
+    let html = `<p class="viewnote">What each person's lesson adds up to: their summary, their context, and everything of theirs in the library.</p>`;
+    for (const p of PEOPLE) {
+        const learnings = LEARNINGS.filter(l => l.person === p.id);
+        const themes = [...new Set(learnings.flatMap(l => l.themes))];
+        const sources = p.sources.map(s => SOURCES.find(x => x.id === s)).filter(Boolean);
+        html += `<div class="card">
+            <h2>${p.name}</h2>
+            <div class="meta">${p.role}</div>
+            <p>${p.summary}</p>
+            <div class="contextbox"><strong>Read with context:</strong> ${p.context}</div>
+            <div class="themechips">${themes.map(t => `<span class="chip">${themeById[t].name}</span>`).join('')}</div>
+            <div class="tnote">Sources: ${sources.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.title}</a>`).join(' · ')}</div>
+        </div>`;
+    }
+    el.innerHTML = html;
+}
+
+function renderThemes() {
+    const el = document.getElementById('view-themes');
+    let html = `<p class="viewnote">What the library says about each question: every person's position, with their name attached. Agreements converge; disagreements stay visible.</p>`;
+    for (const t of THEMES) {
+        const learnings = LEARNINGS.filter(l => l.themes.includes(t.id));
+        if (!learnings.length) continue;
+        html += `<div class="card">
+            <div class="eyebrow">${learnings.length} position${learnings.length === 1 ? '' : 's'}</div>
+            <h2>${t.name}</h2>
+            <div class="meta">${t.question}</div>
+            ${learnings.map(l => {
+                const p = personById[l.person];
+                return `<div class="position">
+                    <div class="who">${p.name}</div>
+                    <div class="stance">${l.claim}</div>
+                    ${quoteBlock(l.quote)}
+                </div>`;
+            }).join('')}
+        </div>`;
+    }
+    el.innerHTML = html;
+}
+
+renderSources();
+renderPeople();
+renderThemes();
+</script>
+</body>
+</html>

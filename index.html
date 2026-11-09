@@ -134,7 +134,7 @@ function renderSources() {
                 <h3>What this source contributes (${learnings.length} learnings)</h3>
                 ${learnings.map((l, i) => `
                     <details>
-                        <summary>${i + 1}. ${l.claim.split('. ')[0]}.</summary>
+                        <summary>${i + 1}. ${l.claim.split('. ')[0].replace(/\.+$/, '')}.</summary>
                         <div class="claimtext">${l.claim}</div>
                         ${quoteBlock(l.quote)}
                         <div class="themechips">${l.themes.map(t => `<span class="chip">${themeById[t].name}</span>`).join('')}</div>
